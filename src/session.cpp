@@ -3,23 +3,18 @@
 
 Session::Session(bool is_server) {
 	is_server_ = is_server;
-	if (use_boost_) {
+	if constexpr (use_boost_) {
 		if (is_server_)
-			connection_ = new BoostServerConnection();
+			connection_ = std::make_unique<BoostServerConnection>();
 		else
-			connection_ = new BoostClientConnection();
+			connection_ = std::make_unique<BoostClientConnection>();
 	}
 	else {
 		if (is_server_)
-			connection_ = new ServerConnection();
+			connection_ = std::make_unique<ServerConnection>();
 		else
-			connection_ = new ClientConnection();
+			connection_ = std::make_unique<ClientConnection>();
 	}
-}
-
-Session::~Session() {
-	if (connection_ != NULL)
-		delete connection_;
 }
 
 void Session::start() {

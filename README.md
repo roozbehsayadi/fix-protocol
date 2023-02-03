@@ -24,8 +24,8 @@ Source: [AQUAQ Analytics](https://aquaq.co.uk/kdb-fix-adapter/)
 
 3. Compile the source code with `g++` with the following commands:
 
-   1. `g++ -O2 -std=c++11 -o bin/server.out mainserver.cpp src/* -I include -L lib -lboost_system -lboost_thread -pthread`
-   2. `g++ -O2 -std=c++11 -o bin/client.out maintestclient.cpp src/* -I include -L lib -lboost_system -lboost_thread -pthread`
+   1. `g++ -O2 -std=c++2a -o bin/server.out mainserver.cpp src/* -I include -L lib -lboost_system -lboost_thread -pthread -fconcepts`
+   2. `g++ -O2 -std=c++2a -o bin/client.out maintestclient.cpp src/* -I include -L lib -lboost_system -lboost_thread -pthread -fconcepts`
 
 4. Run the executable files with the following commands:
 
@@ -65,4 +65,4 @@ Source: [AQUAQ Analytics](https://aquaq.co.uk/kdb-fix-adapter/)
 
 - Handle the 14th scenario of [FIX Protocol 4.4 testcases](https://www.fixtrading.org/standards/fix-session-testcases-online/).
 - Separate configuration constants from FIX protocol constants. Don't store everything in a single `include/constants.h` file.
-- Use smart_ptr and move semantics to improve efficiency.
+- Use move semantics to improve efficiency.

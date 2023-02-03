@@ -2,6 +2,7 @@
 #define SESSION_H
 
 #include <chrono>
+#include <memory>
 #include <ctime>
 #include "connection.h"
 #include "clientconnection.h"
@@ -16,7 +17,7 @@
 class Session {
 public:
 	Session(bool is_server);
-	~Session();
+	~Session() = default;
 	void start();
 	void end();
 	void handle_logon(Message& msg);
@@ -36,11 +37,12 @@ public:
 
 private:
 	bool is_user_duplicated_or_unauthenticated(Message& msg) const;
-	Connection* connection_ = NULL;
+	std::unique_ptr<Connection> connection_;
 	unsigned int next_msg_seq_num_ = 0;
 	bool is_session_running_ = false;
 	bool logon_message_received_ = false;
-	bool is_server_, use_boost_ = constants::USE_BOOST;
+	bool is_server_;
+	static constexpr bool use_boost_ = constants::USE_BOOST;
 	double heartbeat_interval_ = 1e9;
 	bool received_valid_message_;
 	std::chrono::time_point<std::chrono::system_clock> last_received_message_time_ = std::chrono::system_clock::now();
